@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
+  {
+    path: 'system', loadChildren: () => import('./system/system.module').then(m => m.SystemModule)
+  },
   { path: 'dashboard', component: DashboardComponent }
 ];
 
@@ -10,4 +13,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ProtectedRoutingModule { }
+export class ProtectedRoutingModule {
+}

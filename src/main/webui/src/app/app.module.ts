@@ -6,7 +6,6 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthService } from './core/service/auth/auth.service';
 
 
 @NgModule({

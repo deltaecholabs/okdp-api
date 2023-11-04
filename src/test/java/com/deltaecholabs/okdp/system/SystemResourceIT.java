@@ -1,8 +1,8 @@
-package com.deltaecholabs.okdp;
+package com.deltaecholabs.okdp.system;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
 @QuarkusIntegrationTest
-public class ExampleResourceIT extends ExampleResourceTest {
+public class SystemResourceIT extends SystemResourceTest {
     // Execute the same tests but in packaged mode.
 }

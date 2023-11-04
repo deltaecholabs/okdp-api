@@ -1,3 +1,29 @@
 quarkus:
+  banner:
+    enabled: false
+  hibernate-orm:
+    database:
+      generation: none
   quinoa:
     enable-spa-routing: true
+  micrometer:
+    binder:
+      http-server:
+        ignore-patterns:
+          - '/q.*'
+
+mp:
+  openapi:
+    extensions:
+      smallrye:
+        info:
+          title: okdp-api
+          version: 0.0.1
+          description: okdp api
+          contact:
+            email: techsupport@redhat.com
+            name: okdp API Support
+            url: https://github.com/deltaecholabs/okdp-api
+          license:
+            name: Apache 2.0
+            url: http://www.apache.org/licenses/LICENSE-2.0.html
