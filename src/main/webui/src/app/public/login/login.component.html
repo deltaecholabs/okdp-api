@@ -1,0 +1,32 @@
+<form #form="ngForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card">
+        <h3 class="card-header">Login</h3>
+        <div class="card-body">
+          <app-page-errors [errors]="errors"></app-page-errors>
+          <div class="mb-3">
+            <label for="email">Email</label>
+            <input id="email" type="email" formControlName="email" class="form-control"
+                   [ngClass]="{ 'is-invalid': form.submitted && controls.email.invalid }">
+            <div *ngIf="form.submitted && controls.email.invalid" class="text-danger">
+              <small *ngIf="controls.email.errors?.required">Email is required.</small>
+              <small *ngIf="controls.email.errors?.email">Email is invalid.</small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="password">Password</label>
+            <input id="password" type="password" formControlName="password" class="form-control"
+                   [ngClass]="{ 'is-invalid': form.submitted && controls.password.invalid }">
+            <div *ngIf="form.submitted && controls.password.invalid" class="text-danger">
+              <small *ngIf="controls.password.errors?.required">Password is required.</small>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <button type="submit" class="btn btn-primary float-right">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
