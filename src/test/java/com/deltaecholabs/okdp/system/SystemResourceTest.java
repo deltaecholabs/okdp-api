@@ -1,6 +1,8 @@
 package com.deltaecholabs.okdp.system;
 
+import com.deltaecholabs.okdp.configuration.AuthRoles;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
@@ -12,15 +14,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SystemResourceTest {
 
     @Test
+    @TestSecurity(user = "amy.admin@test.com", roles = {AuthRoles.USER, AuthRoles.SYSTEM_VIEW})
     public void getAll() {
         given()
                 .when()
-                .get()
+                .get("/systems")
                 .then()
                 .statusCode(200);
     }
 
     @Test
+    @TestSecurity(user = "amy.admin@test.com", roles = {AuthRoles.USER, AuthRoles.SYSTEM_VIEW, AuthRoles.SYSTEM_EDIT})
     public void getById() {
         System system = createSystem();
         System saved = given()
@@ -40,6 +44,7 @@ public class SystemResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "amy.admin@test.com", roles = {AuthRoles.USER, AuthRoles.SYSTEM_VIEW})
     public void getByIdNotFound() {
         given()
                 .when()
@@ -49,6 +54,7 @@ public class SystemResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "amy.admin@test.com", roles = {AuthRoles.USER, AuthRoles.SYSTEM_EDIT})
     public void post() {
         System system = createSystem();
         System saved = given()
@@ -62,6 +68,7 @@ public class SystemResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "amy.admin@test.com", roles = {AuthRoles.USER, AuthRoles.SYSTEM_EDIT})
     public void postFailNoName() {
         System system = createSystem();
         system.setName(null);
@@ -74,6 +81,7 @@ public class SystemResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "amy.admin@test.com", roles = {AuthRoles.USER, AuthRoles.SYSTEM_EDIT, AuthRoles.SYSTEM_VIEW})
     public void put() {
         System system = createSystem();
         System saved = given()

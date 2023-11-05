@@ -1,6 +1,8 @@
 package com.deltaecholabs.okdp.system;
 
+import com.deltaecholabs.okdp.configuration.AuthRoles;
 import com.deltaecholabs.okdp.exception.ServiceException;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
@@ -26,6 +28,7 @@ import java.util.Objects;
 @Tag(name = "system", description = "System Operations")
 @AllArgsConstructor
 @Slf4j
+@RolesAllowed(AuthRoles.USER)
 public class SystemResource {
 
     private final SystemService systemService;
@@ -39,6 +42,7 @@ public class SystemResource {
                     schema = @Schema(type = SchemaType.ARRAY, implementation = System.class)
             )
     )
+    @RolesAllowed({AuthRoles.SYSTEM_VIEW})
     public Response get() {
         return Response.ok(systemService.findAll()).build();
     }
@@ -58,6 +62,7 @@ public class SystemResource {
             description = "System does not exist for systemId",
             content = @Content(mediaType = MediaType.APPLICATION_JSON)
     )
+    @RolesAllowed({AuthRoles.SYSTEM_VIEW})
     public Response getById(@Parameter(name = "systemId", required = true) @PathParam("systemId") Integer systemId) {
         return systemService.findById(systemId)
                 .map(system -> Response.ok(system).build())
@@ -83,6 +88,7 @@ public class SystemResource {
             description = "System already exists for systemId",
             content = @Content(mediaType = MediaType.APPLICATION_JSON)
     )
+    @RolesAllowed({AuthRoles.SYSTEM_EDIT})
     public Response post(@NotNull @Valid System system, @Context UriInfo uriInfo) {
         systemService.save(system);
         URI uri = uriInfo.getAbsolutePathBuilder().path(Integer.toString(system.getSystemId())).build();
@@ -119,6 +125,7 @@ public class SystemResource {
             description = "No System found for systemId provided",
             content = @Content(mediaType = MediaType.APPLICATION_JSON)
     )
+    @RolesAllowed({AuthRoles.SYSTEM_EDIT})
     public Response put(@Parameter(name = "systemId", required = true) @PathParam("systemId") Integer systemId, @NotNull @Valid System system) {
         if (!Objects.equals(systemId, system.getSystemId())) {
             throw new ServiceException("Path variable systemId does not match System.systemId");

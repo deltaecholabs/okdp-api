@@ -10,3 +10,9 @@ quarkus:
   flyway:
     migrate-at-start: true
     locations: db/migration,db/testdata
+  keycloak:
+    devservices:
+      users:
+        amy.admin@test.com: password
+      roles:
+        amy.admin@test.com: USER,SYSTEM_READ
